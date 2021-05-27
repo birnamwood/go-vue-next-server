@@ -1,0 +1,4 @@
+# バイナリの類は上げない
+log/
+.devcontainer/
+server

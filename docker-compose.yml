@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: go-vue-next-postgres
+    ports:
+      - 5432:5432
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
+
+  api:
+    container_name: go-vue-next-api
+    ports:
+      - 8000:8000
+      - 5002:5002
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: ./docker/go/Dockerfile
+    environment:
+      - GOPATH=/go
+    volumes:
+      # ホストOS：コンテナ側
+      - ./:/go/src/go-vue-next-server/
+    command: >
+      bash -c "go generate generate/generate.go &&
+      golangci-lint run &&
+      realize start --server"

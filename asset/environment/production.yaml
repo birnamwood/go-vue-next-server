@@ -1,0 +1,24 @@
+environment: local
+
+server:
+  port: 8000
+
+db:
+  # Dockerを使う場合はアドレスではなくコンテナ名を指定する
+  host: postgres
+  port: 5432
+  dbname: db
+  user: postgres
+  password: postgres
+  max-open-connection: 50 #最大接続数
+  max-idle-connection: 5 # 待機Connection数
+  max-lifetime: 30 # Connection再利用期間(秒)
+
+log:
+  path: log
+  maxage: -1 # /days :古いログファイルを保持する最大日数 -1で消さない
+
+alert:
+  enabled: false
+  from: birnamwood19@gmail.co.jp
+  to: [birnamwood19@gmail.co.jp]

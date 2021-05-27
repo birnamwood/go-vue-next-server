@@ -1,0 +1,36 @@
+settings:
+  legacy:
+    # コンテナの場合レガシーモードでないと動かない
+    force: true
+    interval: 0s
+server:
+  status: true
+  open: false
+  # ホストはコンテナ名で指定
+  host: api
+  port: 5002
+schema:
+- name: go-vue-next-server
+  path: .
+  commands:
+    fmt:
+      status: true
+      args:
+      - -s
+      - -w
+    install:
+      status: true
+      method: go build -o server ./cmd/go-vue-next-server/main.go
+    run:
+      status: true
+      method: ./server
+  watcher:
+    extensions:
+    - go
+    - yaml
+    paths:
+    - ./
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor
